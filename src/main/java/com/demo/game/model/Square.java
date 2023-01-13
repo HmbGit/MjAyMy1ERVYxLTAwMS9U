@@ -1,5 +1,6 @@
 package com.demo.game.model;
 
+import com.demo.game.enums.XOValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class Square implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private String  value;
+    private XOValue value;
     @Column(unique=true)
     private int index;
 }
