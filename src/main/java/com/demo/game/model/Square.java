@@ -1,10 +1,7 @@
 package com.demo.game.model;
 
 import com.demo.game.enums.XOValue;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,17 +10,18 @@ import java.io.Serializable;
  * Class Square
  */
 @Entity
-@Table
+@Table(name = "SQUARE")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Square implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private XOValue value;
+    private XOValue xoValue;
     @Column(unique=true)
     private int index;
 }
