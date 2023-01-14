@@ -31,7 +31,7 @@ public class TestSquare {
     @Test
     public void testXOValue(){
         Square square = new Square(1L, XOValue.X,1);
-        Assertions.assertEquals("X",square.getValue().name());
+        Assertions.assertEquals("X",square.getXoValue().name());
     }
 
 }
