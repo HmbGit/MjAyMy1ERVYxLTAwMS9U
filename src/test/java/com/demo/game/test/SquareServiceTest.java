@@ -3,12 +3,14 @@ package com.demo.game.test;
 import com.demo.game.enums.XOValue;
 import com.demo.game.model.Square;
 import com.demo.game.repository.SquareRepository;
+import com.demo.game.service.SquareService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -18,6 +20,9 @@ import java.util.List;
 @SpringBootTest
 public class SquareServiceTest {
 
+    @Autowired
+    private SquareService squareService;
+
     @MockBean
     private SquareRepository squareRepository;
 
@@ -26,7 +31,7 @@ public class SquareServiceTest {
 
     @BeforeEach
     void setUp(){
-        square = Square.builder().id(1L).xoValue(XOValue.X).index(1).build();
+        square = Square.builder().id(1L).xoValue(XOValue.O).index(1).build();
         squares = new ArrayList<>();
     }
 
@@ -35,8 +40,20 @@ public class SquareServiceTest {
         Mockito.when(squareRepository.findAll()).thenReturn(squares);
         Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
 
-        Square sqrt = squareRepository.save(square);
+        Square sqrt = squareService.saveSquare(square);
         Assertions.assertNotNull(sqrt);
         Assertions.assertEquals("X",sqrt.getXoValue().name());
+    }
+
+    @Test
+    void shouldCreateSecondSquareWithO(){
+        squares.add(square);
+        square.setXoValue(XOValue.X);
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
+
+        Square sqrt = squareService.saveSquare(square);
+        Assertions.assertNotNull(sqrt);
+        Assertions.assertEquals("O",sqrt.getXoValue().name());
     }
 }
