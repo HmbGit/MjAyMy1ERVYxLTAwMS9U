@@ -23,11 +23,28 @@ public class SquareServiceImpl implements SquareService {
     @Override
     public Square saveSquare(Square square) {
         List<Square> squares = (List<Square>) squareRepository.findAll();
-        if(squares.size() % 2 == 0)
-            square.setXoValue(XOValue.X);
-        else
-            square.setXoValue(XOValue.O);
+        sizeOfListSquare(squares, square);
+        if(squares.size() <= 8)
+            return squareRepository.save(square);
+        else{
+            squareRepository.deleteAll();
+            return null;
+        }
 
-        return squareRepository.save(square);
+    }
+
+    /**
+     * size Of List Square
+     * @param squares
+     * @param square
+     * @return
+     */
+    private Square sizeOfListSquare(List<Square> squares, Square square){
+        if(squares.size() % 2 == 0) {
+            square.setXoValue(XOValue.X);
+        }else{
+            square.setXoValue(XOValue.O);
+        }
+        return square;
     }
 }
