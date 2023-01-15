@@ -7,9 +7,8 @@ import com.demo.game.service.SquareService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatcher;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,5 +54,28 @@ public class SquareServiceTest {
         Square sqrt = squareService.saveSquare(square);
         Assertions.assertNotNull(sqrt);
         Assertions.assertEquals("O",sqrt.getXoValue().name());
+    }
+
+
+    @Test
+    void whenNineSquareFilledAndNoWinner(){
+        while (squares.size() <= 8){
+            squares.add(square);
+        }
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
+        Square sqrt = squareService.saveSquare(square);
+        Assertions.assertNull(sqrt);
+    }
+
+    @Test
+    void whenNineSquareFilledAndNoWinner_shouldDeleteAllSquare(){
+        while (squares.size() <= 8){
+            squares.add(square);
+        }
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Square sqrt = squareService.saveSquare(square);
+        Assertions.assertNull(sqrt);
+        verify(squareRepository).deleteAll();
     }
 }
