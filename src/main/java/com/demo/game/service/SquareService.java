@@ -4,5 +4,5 @@ import com.demo.game.model.Square;
 
 public interface SquareService {
 
-     Square saveSquare(Square square);
+     String saveSquare(Square square);
 }
