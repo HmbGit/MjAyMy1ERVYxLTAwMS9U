@@ -34,51 +34,39 @@ public class SquareServiceTest {
         squares = new ArrayList<>();
     }
 
-//    @Test
-//    void shouldCreateFirstSquareWithX(){
-//        Mockito.when(squareRepository.findAll()).thenReturn(squares);
-//        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
-//
-//        Boolean sqrt = squareService.saveSquare(square);
-//        Assertions.assertEquals(false,sqrt);
-//        Assertions.assertEquals("X",sqrt.getXoValue().name());
-//    }
-//
-//    @Test
-//    void shouldCreateSecondSquareWithO(){
-//        squares.add(square);
-//        square.setXoValue(XOValue.X);
-//        Mockito.when(squareRepository.findAll()).thenReturn(squares);
-//        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
-//
-//        Square sqrt = squareService.saveSquare(square);
-//        Assertions.assertNotNull(sqrt);
-//        Assertions.assertEquals("O",sqrt.getXoValue().name());
-//    }
-//
-//
-//    @Test
-//    void whenNineSquareFilledAndNoWinner(){
-//        while (squares.size() <= 8){
-//            squares.add(square);
-//        }
-//        Mockito.when(squareRepository.findAll()).thenReturn(squares);
-//        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
-//        Square sqrt = squareService.saveSquare(square);
-//        Assertions.assertNull(sqrt);
-//    }
-//
-//    @Test
-//    void whenNineSquareFilledAndNoWinner_shouldDeleteAllSquare(){
-//        while (squares.size() <= 8){
-//            squares.add(square);
-//        }
-//        Mockito.when(squareRepository.findAll()).thenReturn(squares);
-//        Square sqrt = squareService.saveSquare(square);
-//        Assertions.assertNull(sqrt);
-//        verify(squareRepository).deleteAll();
-//    }
+    @Test
+    void shouldCreateFirstSquareWithX(){
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
 
+        String sqrt = squareService.saveSquare(square);
+        Assertions.assertEquals("square Created with X",sqrt);
+    }
+
+    @Test
+    void shouldCreateSecondSquareWithO(){
+        squares.add(square);
+        square.setXoValue(XOValue.X);
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
+
+        String sqrt = squareService.saveSquare(square);
+        Assertions.assertNotNull(sqrt);
+        Assertions.assertEquals("square Created with O",sqrt);
+    }
+
+
+    @Test
+    void whenNineSquareFilledAndNoWinner(){
+        while (squares.size() <= 7){
+            squares.add(square);
+        }
+        Mockito.when(squareRepository.findAll()).thenReturn(squares);
+        Mockito.when(squareRepository.save(Mockito.any(Square.class))).thenReturn(square);
+        String sqrt = squareService.saveSquare(square);
+        Assertions.assertEquals("no winner replay the game",sqrt);
+        verify(squareRepository).deleteAll();
+    }
 
     @Test
     void whenLinedThreeX_ShouldGetAWinner(){

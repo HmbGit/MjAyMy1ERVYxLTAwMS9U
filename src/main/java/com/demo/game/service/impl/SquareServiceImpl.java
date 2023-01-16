@@ -32,7 +32,7 @@ public class SquareServiceImpl implements SquareService {
             square = squareRepository.save(square);
             squares.add(square);
             message = "square Created with "+ square.getXoValue().toString();
-            if (squares.size() >= 5) {
+            if (squares.size() >= 4) {
                 Map<Integer, String> boardGame = new HashMap<>();
                 for (Square sqrt : squares) {
                     boardGame.put(sqrt.getIndex(), sqrt.getXoValue().toString());
@@ -41,11 +41,11 @@ public class SquareServiceImpl implements SquareService {
                 if(winner != null){
                     message = "winner ==> "+winner;
                 }
+                if(squares.size() == 9){
+                    squareRepository.deleteAll();
+                    message = "no winner replay the game";
+                }
             }
-
-        } else {
-            squareRepository.deleteAll();
-            message = "no winner";
         }
         return message;
     }
