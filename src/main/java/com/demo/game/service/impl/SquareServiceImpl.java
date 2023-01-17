@@ -32,7 +32,7 @@ public class SquareServiceImpl implements SquareService {
             square = squareRepository.save(square);
             squares.add(square);
             message = "square Created with "+ square.getXoValue().toString();
-            if (squares.size() >= 4) {
+            if (squares.size() >= 5) {
                 Map<Integer, String> boardGame = new HashMap<>();
                 for (Square sqrt : squares) {
                     boardGame.put(sqrt.getIndex(), sqrt.getXoValue().toString());
@@ -66,7 +66,11 @@ public class SquareServiceImpl implements SquareService {
         return square;
     }
 
-
+    /**
+     * create a board game and simulate all the line winner
+     * @param boardGame
+     * @return
+     */
     public String checkWinner(Map<Integer, String> boardGame) {
         for (int a = 0; a < 8; a++) {
             String line = null;
