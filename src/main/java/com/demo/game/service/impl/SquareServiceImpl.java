@@ -40,6 +40,7 @@ public class SquareServiceImpl implements SquareService {
                 String winner = checkWinner(boardGame);
                 if(winner != null){
                     message = "winner ==> "+winner;
+                    squareRepository.deleteAll();
                 }
                 if(squares.size() == 9){
                     squareRepository.deleteAll();
